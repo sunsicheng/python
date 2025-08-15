@@ -11,6 +11,7 @@ print('-' * 50)
 # 2 输入一个字符串，提取字符串中的数字，并求和
 str = input('请输入字符串')
 # lst = list(str)
+print(str.islower())
 
 sum = 0
 for elem in str:

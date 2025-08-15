@@ -1,0 +1,80 @@
+# from mall.entity.DataBase import DataBase 详细解释
+
+# 1. 项目结构示例
+"""
+your_project/
+├── mall/                    # 包(package)
+│   ├── __init__.py         # 使mall成为一个包
+│   ├── entity/             # 子包(subpackage)
+│   │   ├── __init__.py     # 使entity成为一个包
+│   │   └── DataBase.py     # 模块(module)
+│   └── service/
+│       ├── __init__.py
+│       └── UserService.py
+"""
+
+# 2. 导入语句分解
+# from  mall.entity.DataBase import DataBase
+#       |    |     |       |        |
+#       |    |     |       |        └── 要导入的类名
+#       |    |     |       └── import 关键字
+#       |    |     └── 模块名(文件名DataBase.py)
+#       |    └── 子包名
+#       └── 包名
+
+# 3. 等价的不同导入方式
+
+# 方式1：导入整个模块
+import mall.entity.DataBase
+# 使用时需要：mall.entity.DataBase.DataBase.userList
+
+# 方式2：给模块起别名
+import mall.entity.DataBase as db
+# 使用时：db.DataBase.userList
+
+# 方式3：导入模块到当前命名空间
+from mall.entity import DataBase
+# 使用时：DataBase.DataBase.userList
+
+# 方式4：导入具体的类(推荐)
+from mall.entity.DataBase import DataBase
+# 使用时：DataBase.userList
+
+# 方式5：导入类并重命名
+from mall.entity.DataBase import DataBase as DB
+# 使用时：DB.userList
+
+# 方式6：导入类的属性
+from mall.entity.DataBase import DataBase
+userList = DataBase.userList
+# 直接使用：userList
+
+# 4. 实际使用示例
+from mall.entity.DataBase import DataBase
+
+class UserService:
+    def login(self, userName, password):
+        # 直接使用DataBase类
+        if userName in DataBase.userList:
+            if password == DataBase.userList[userName]:
+                return "登录成功"
+        return "登录失败"
+
+# 5. 如果DataBase.py文件内容是这样：
+"""
+# mall/entity/DataBase.py
+class DataBase:
+    userList = {'hadoop': 'hadoop', 'flink': 'flink123'}
+
+class AnotherClass:
+    pass
+
+def some_function():
+    pass
+"""
+
+# 那么你可以这样导入：
+from mall.entity.DataBase import DataBase          # 导入DataBase类
+from mall.entity.DataBase import AnotherClass      # 导入AnotherClass类
+from mall.entity.DataBase import some_function     # 导入some_function函数
+from mall.entity.DataBase import DataBase, AnotherClass  # 同时导入多个
